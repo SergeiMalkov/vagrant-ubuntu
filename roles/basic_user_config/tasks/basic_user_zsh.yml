@@ -1,5 +1,5 @@
 ---
-- name: "Change my user\'s shell to zsh"
+- name: "Change my user's shell to zsh"
   user:
     name: "{{ basic_user_config_username }}"
     shell: "/bin/zsh"
