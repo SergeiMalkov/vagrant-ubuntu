@@ -1,0 +1,21 @@
+---
+
+- name: "Install text editor, terminal multiplexer and documentation"
+  dnf:
+    name: "{{ item }}"
+    state: installed
+  loop: "{{ basic_software_user_tools }}"
+
+
+- name: "Install sysadmin and networking tools"
+  dnf:
+    name: "{{ item }}"
+    state: installed
+  loop: "{{ basic_software_sysadmin_tools }}"
+
+
+- name: "Install python-related stuff"
+  dnf:
+    name: "{{ item }}"
+    state: installed
+  loop: "{{ basic_software_python_tools }}"

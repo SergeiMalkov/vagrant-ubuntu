@@ -1,0 +1,6 @@
+---
+
+- include: podman_install.yml
+  tags:
+    - podman_install
+    - podman

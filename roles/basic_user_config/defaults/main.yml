@@ -1,0 +1,6 @@
+---
+basic_user_config_homepref: "home"
+basic_user_config_username: "cloud_user"
+basic_user_config_homedir: "/{{ basic_user_config_homepref }}/{{ basic_user_config_username }}"
+basic_user_config_sshdir: "{{ basic_user_config_homedir }}/.ssh"
+basic_user_config_default_zshrc: "{{ basic_user_config_homedir }}/.zshrc"

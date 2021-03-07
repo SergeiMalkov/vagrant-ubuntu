@@ -1,0 +1,6 @@
+---
+server_hostname: vagrant1.example.com
+server_alias_hostname: vagrant1
+server_primary_ip: 192.168.33.25
+server_poluchil: "za pupu i lupu"
+vagrant1: here

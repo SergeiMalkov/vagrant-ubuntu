@@ -1,0 +1,12 @@
+set nu
+set ruler
+syntax on
+
+" use spaces instead of tabs
+set expandtab
+set smarttab
+" 1 tab - 2 spaces
+set shiftwidth=2
+set tabstop=2
+" playing with remaping escape
+:imap jk <Esc>

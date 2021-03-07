@@ -1,0 +1,4 @@
+---
+
+install_aws_cli2_download_url: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+install_aws_cli2_tmpdir: "/tmp/aws"

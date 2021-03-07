@@ -1,0 +1,3 @@
+- include: podman_pull_img.yaml
+  tags:
+    - user_podman_pull_img

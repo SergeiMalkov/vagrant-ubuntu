@@ -1,0 +1,18 @@
+---
+
+basic_server_tz: "/usr/share/zoneinfo/Europe/Moscow"
+basic_server_motd_path: "/etc/motd"
+basic_server_common_apt:
+  # Commented out because there's no SELinux on *buntu by default
+  # - python3-libselinux
+  # - python3-libsemanage
+  - chrony
+  - firewalld
+  - unzip
+
+basic_services_start_enable:
+  - chronyd
+  - firewalld
+
+basic_server_firewall_enabled_services:
+  - ssh

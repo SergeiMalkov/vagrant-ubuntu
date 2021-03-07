@@ -1,0 +1,14 @@
+---
+
+podman_packages:
+  - podman
+  - podman-docker
+  - podman-compose
+
+# Docker images; we pull some of them and for this lab's purpose we deal only
+# with official and latest ones. This might be changed when we are in need of specific
+# images
+
+podman_pull_images_list:
+  - "docker.io/alpine"
+  - "docker.io/busybox"

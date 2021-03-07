@@ -1,0 +1,8 @@
+---
+- name: "Copy vimrc to my user's home folder "
+  copy:
+    src: vimrc
+    dest: "{{ basic_user_config_homedir }}/.vimrc"
+    mode: '0660'
+    owner: "{{ basic_user_config_username }}"
+    group: "{{ basic_user_config_username }}"

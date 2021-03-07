@@ -1,0 +1,23 @@
+---
+- name: "Check if OMZ is already installed"
+  stat:
+    path: "{{ basic_user_config_homedir }}/.oh-my-zsh"
+  register: omz_dir
+
+- name: "Dirty install oh-my-zsh"
+  shell: '/bin/sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
+  when: not omz_dir.stat.exists
+
+- name: "Delete auto-generated ~/.zshrc"
+  file:
+    path: "{{ basic_user_config_default_zshrc }}"
+    state: absent
+
+
+- name: "Replace with our customized template"
+  template:
+    src: zshrc.j2
+    dest: "{{ basic_user_config_default_zshrc }}"
+    owner: "{{ basic_user_config_username }}"
+    group: "{{ basic_user_config_username }}"
+    mode: "0644"

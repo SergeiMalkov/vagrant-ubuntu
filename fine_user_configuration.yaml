@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  become: yes
+  become_user: "{{ basic_user_config_username }}"
+  roles:
+    - custom_includes_directory
+    - user_podman_pull_images
+    - user_install_ohmyzsh

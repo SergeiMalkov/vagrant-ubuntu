@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  become: yes
+  roles:
+    - basic_server
+#     - basic_software
+#     - basic_user_config
+#     - podman
+#     - install_aws_cli2
+#     - install_terraform
+
+# - hosts: localhost
+#   become: yes
+#   become_user: "{{ basic_user_config_username }}"
+#   roles:
+#     - custom_includes_directory
+#     - user_podman_pull_images
+#     - user_install_ohmyzsh

@@ -1,0 +1,19 @@
+---
+
+- name: "Ensure custom_includes directories for {{ basic_user_config_username }} exist"
+  file:
+    path: "/home/{{ basic_user_config_username }}/{{ item }}"
+    state: directory
+    mode: "0700"
+    owner: "{{ basic_user_config_username }}"
+    group: "{{ basic_user_config_username }}"
+  loop: "{{ custom_includes_items }}"
+
+- name: "Deploy aws credentials for my playground"
+  copy:
+    src: "awson.sh"
+    dest: "/home/{{ basic_user_config_username }}/includes/awson.sh"
+    mode: "0600"
+    owner: "{{ basic_user_config_username }}"
+    group: "{{ basic_user_config_username }}"
+

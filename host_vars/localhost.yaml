@@ -1,0 +1,4 @@
+---
+basic_user_config_username: "sergmalkov"
+basic_user_config_homedir: "/home/sergmalkov"
+basic_user_config_default_zshrc: "{{ basic_user_config_homedir }}/.zshrc"

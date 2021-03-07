@@ -1,0 +1,4 @@
+---
+user_podman_pull_images_list:
+  - "docker.io/alpine:latest"
+  - "docker.io/centos:latest"

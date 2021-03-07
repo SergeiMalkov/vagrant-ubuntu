@@ -1,0 +1,64 @@
+---
+
+- name: "Update Repos indexes to the latest versions"
+  apt:
+    update_cache: yes
+
+
+- name: "Install common basic set of software"
+  apt:
+    name: "{{ item }}"
+    state: latest
+  loop: "{{ basic_server_common_apt }}"
+
+
+- name: Ensure that the hostname is the same of the inventory
+  hostname:
+    name: "{{ inventory_hostname }}"
+
+
+- name: "Update {{ basic_server_motd_path }}"
+  template:
+      src: motd.j2
+      dest: "{{ basic_server_motd_path }}"
+      owner: root
+      group: root
+      mode: '0644'
+
+
+- name: "Configure timezone; let it be MSK"
+  file:
+    src: "{{ basic_server_tz }}"
+    dest: /etc/localtime
+    state: link
+
+
+- name: "Ensure that Chrony and Firwalld are running and those start at boot time"
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  loop: "{{ basic_services_start_enable }}"
+
+
+- name: "Ensure that SSH passes firewall anyway"
+  firewalld:
+    service: "{{ item }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+  loop: "{{ basic_server_firewall_enabled_services }}"
+
+- name: "Ensure that /usr/local/bin directory exists"
+  file:
+    name: /usr/local/bin
+    state: directory
+    mode: '0775'
+    owner: root
+    group: root
+  tags:
+    - localbin
+
+
+
+

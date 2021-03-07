@@ -1,0 +1,5 @@
+developers: [ "alice","bob","eve" ]
+cats_colors:
+    murka: "black and green"
+    baton: "white and orange"
+    catato: "blue and red"

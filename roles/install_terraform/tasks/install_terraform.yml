@@ -1,0 +1,10 @@
+---
+
+- name: "Download terraform archive"
+  unarchive:
+    src: "{{ install_terraform_tf_archive }}"
+    remote_src: yes
+    dest: "{{ install_terraform_dest_path }}"
+    owner: "{{ install_terraform_binary_owner }}"
+    group: "{{ install_terraform_binary_group }}"
+    mode: "{{ install_terraform_binary_mode }}"

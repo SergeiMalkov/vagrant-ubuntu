@@ -1,0 +1,9 @@
+---
+
+- hosts: playground
+  become: yes
+  roles:
+    - basic_server
+    - basic_software
+    - basic_user_config
+    - podman

@@ -1,0 +1,23 @@
+---
+- hosts: playground
+  become: no
+  gather_facts: no
+  tasks:
+    # - debug:
+    #     var: ansible_eth0
+
+    # - debug:
+    #     var: group_names    
+
+        
+    - name: "Print custom progs path"
+      debug:
+        var: hostvars[inventory_hostname]
+    # - name: "Print list of default services"
+    #   debug:
+    #     msg: "Service list is {{ service_list }}"
+
+    #  - name: "List all variables and facts for group playground"
+    # - debug:
+    #     var: hostvars[vagrant1]
+    #     verbosity: 4

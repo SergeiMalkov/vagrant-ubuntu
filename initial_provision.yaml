@@ -1,0 +1,150 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    bootstrap_tools:
+      - git
+      - acl #
+
+
+    sudoers_profile_dir: "/etc/sudoers.d"
+    my_user: "sergmalkov"
+    my_user_pubkey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDfsNvLBm2IHwehbXogGw9tLH+VvClRtY8mstNI9qD4+2Aeonlt6lbT68Z4QlBU4+M58chkiPhriCVYrarEJep+F/sXw8TcA/ClQH7egXjUQAdJk4NvlC/4CnAhQM9jpGZFOC/I7+f5VtH0d4ai+mmhgMVO4sn4AOlZvDAWf5CeAPLhXKXlmxKCA2p43XAoz3R0qcLDBqmjI6FFQUFOM7/g0TnXNfHANoNDAQMR6KxLd5WdqR2eQSlAa6Yeolm+HxajCGJ3hZrJ5RTaqaPW8YNQnLu/yRJ9LysITJaxg4X2ShRwpaQ5OEZWsNimaBmeSnw8YufGmGyVBBoeSIExdd+x+Y/xTLTTVpyddKssZL3I9kd7dhKha2l8UByt8nIp2crA5mbpYrKlSGEGimHUl4WPc9VQy4y520nAZ8sRTOfh2T1CRCU66nPjQ1twK8OerJlp1BwH1oxxe2M/uWZ5W/+zCleqOIR0qwK5I6cE1QRPbwfrEaoTtiCdtv1TCIMn/OPRIrzn3OxEXl7Y2dPV/MsWolQX99QZZI9wr7QA75XJe0+KMsPpeOLCMBUw+XanRClBauDoDdSbXN1FIvOknWfl2ZCgEBusX0l6CP1AOsJqKrJJYgHxvD8idVvr8C3R80TOa3jtOBYC1/gnV67T4TBTuyfudSt7MRqPRBUUlVoRgw== serg@bfg9000"
+    my_user_password: "foobar" # Here it's a placeholder, overriden by credentials.yaml
+    # remote 'ansible' user properties
+    vagrantvm_ansible_user: "ansible"
+    vagrantvm_ansible_user_home: "/home/{{ vagrantvm_ansible_user }}"
+    vagrantvm_ansible_user_ssh_private_key: "{{ vagrantvm_ansible_user_home }}/.ssh/id_rsa"
+    vagrantvm_ansible_dotdir: "{{ vagrantvm_ansible_user_home }}/.ansible"
+    vargantvm_ansible_vault_file_name: "vault_pass"
+    vargantvm_ansible_vault_file_fullpath: "{{ vagrantvm_ansible_dotdir }}/{{vargantvm_ansible_vault_file_name }}"
+    vagrantvm_bootstrap_code_dest: "{{ vagrantvm_ansible_user_home }}/vagrant-ansible"
+    vagrantvm_bootstrap_log: "{{ vagrantvm_ansible_user_home }}/local_bootstrap.log"
+    # one pubkey matches with my_user_pubkey, because I might ssh both under {{ my_user }} and {{ vagrantvm_ansible_user }}
+    vagrantvm_ansible_authorized_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDfsNvLBm2IHwehbXogGw9tLH+VvClRtY8mstNI9qD4+2Aeonlt6lbT68Z4QlBU4+M58chkiPhriCVYrarEJep+F/sXw8TcA/ClQH7egXjUQAdJk4NvlC/4CnAhQM9jpGZFOC/I7+f5VtH0d4ai+mmhgMVO4sn4AOlZvDAWf5CeAPLhXKXlmxKCA2p43XAoz3R0qcLDBqmjI6FFQUFOM7/g0TnXNfHANoNDAQMR6KxLd5WdqR2eQSlAa6Yeolm+HxajCGJ3hZrJ5RTaqaPW8YNQnLu/yRJ9LysITJaxg4X2ShRwpaQ5OEZWsNimaBmeSnw8YufGmGyVBBoeSIExdd+x+Y/xTLTTVpyddKssZL3I9kd7dhKha2l8UByt8nIp2crA5mbpYrKlSGEGimHUl4WPc9VQy4y520nAZ8sRTOfh2T1CRCU66nPjQ1twK8OerJlp1BwH1oxxe2M/uWZ5W/+zCleqOIR0qwK5I6cE1QRPbwfrEaoTtiCdtv1TCIMn/OPRIrzn3OxEXl7Y2dPV/MsWolQX99QZZI9wr7QA75XJe0+KMsPpeOLCMBUw+XanRClBauDoDdSbXN1FIvOknWfl2ZCgEBusX0l6CP1AOsJqKrJJYgHxvD8idVvr8C3R80TOa3jtOBYC1/gnV67T4TBTuyfudSt7MRqPRBUUlVoRgw== serg@bfg9000"
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDFggsOMk2H/o5y+nk305VALee8wPsj1m3d9gsheZ/ulMHmZ3XChvkRA+EOfJne5Z9JXC6U4tn+LNkzyY5pv6Kktr5U5Dx3F6W5TR+8ioIZHEs3SvwfR5Jbr1EOP3fNPUrYO9uU+uUI9hVAmDtMEG+NSHcb0lXraOqVAiq1euK/BU8OPPEbjSjiJaZqH1Y5Qf4wKBx8I9tAZdftRvWGKTj0qdOWDALedWWG8chCYEX1Rg3Y3qHesuSDf1slEObUEdg+DDiro84Gra0v1+yBkou27Ux8/VxNLzYUc2es5e01Js9Zm5k6oX0kfUo/Bt/xDBtnBG2ee74a/9Hyt5wsywtpWG9fHVnuVm0jiF99lssQmrsc1bLn5wMIEo8/l1J2iVgD1efDDgDA82c/ZGeQKZSoGICuTb796CDCTtN0EY1P3W32oIUrbFvKUIRINAHUZYbdhfDK5VAwEoJ6p3koA3m/4RXgUX/hkmdrJhqNKeUFARRbUAZ4JrsyZvF4rgQZf46+ktaIBYDeDpZ7IjNZJXZsVaaxxL5PpnSxqUcuVb7uZVCK7q+9h45BzlZaIBJgueGmpvJS2B9B+VMP+fJrjl1NmHwVVIp6/Q7fL0bzRw0JahrukcFBKzCh+iL38jiMcK7gu9YDHSoXPvEkPPLgTwb1jrPeaCbp/VBD0w50iK85zw== ansible@localhost.localdomain"
+    vargantvm_vault_file_content: "foobar" # placeholder, replace with proper value that comes from credentials.yaml; see Vagrantfile too
+#    vagrantvm_ansible_ssh_key: "foobar"  # also placeholder
+
+  tasks:
+# Configure my regular user first
+    - name: "Create user {{ my_user }}"
+      user:
+        name: sergmalkov
+        state: present
+        password: "{{ my_user_password }}"
+        shell: /bin/bash
+        system: no
+        createhome: yes
+
+
+    - name: "Create sudo profile for {{ my_user }}"
+      template:
+        src: sergmalkov.j2
+        dest: "{{ sudoers_profile_dir }}/{{ my_user }}"
+        mode: "0400"
+        owner: root
+        group: root
+        validate: "/usr/sbin/visudo -cf %s"
+
+
+    - name: "Copy ssh public key  for {{ my_user }}"
+      authorized_key:
+        user: "{{ my_user }}"
+        key:  "{{ my_user_pubkey }}"
+
+# Configure dedicated user for ansible
+
+    - name: "Add user {{ vagrantvm_ansible_user }}"
+      user:
+        name: "{{ vagrantvm_ansible_user }}"
+        state: present
+        shell: /bin/bash
+        system: no
+        createhome: yes
+
+# Setting up ssh authentication, so both my_user and vagrantvm_ansible_user will be able to
+# connect via ssh without password prompt
+    - name: "Enable {{ my_user }} login under {{ vagrantvm_ansible_user }} account and {{ vagrantvm_ansible_user }} bootstrap pubkey"
+      authorized_key:
+        user: "{{ vagrantvm_ansible_user }}"
+        key:  "{{ item }}"
+      loop: "{{ vagrantvm_ansible_authorized_keys }}"
+
+    - name: "Copy private key for {{ vagrantvm_ansible_user }}"
+      copy:
+        src: automated_id_rsa
+        dest: "{{ vagrantvm_ansible_user_ssh_private_key }}"
+        mode: "0600"
+        owner: "{{ vagrantvm_ansible_user }}"
+        group: "{{ vagrantvm_ansible_user }}"
+
+# Prepare vault directory and password file.
+# Sequence of putting vault file may seem ridiculous, but the point is to
+# pass vault password as value from external vars files. So, this is sort of a tradeoff, I guess
+    - name: "Prepare ~ansible/.ansible directory"
+      file:
+        path: "{{ vagrantvm_ansible_dotdir }}"
+        state: directory
+        mode: "0770"
+        owner: "{{ vagrantvm_ansible_user }}"
+        group: "{{ vagrantvm_ansible_user }}"
+
+    - name: "Create vault file for {{ vagrantvm_ansible_user }}"
+      file:
+        path: "{{ vargantvm_ansible_vault_file_fullpath }}"
+        owner: "{{ vagrantvm_ansible_user }}"
+        group: "{{ vagrantvm_ansible_user }}"
+        mode: "0660"
+        state: touch
+
+    - name: "Put proper content into vault file"
+      lineinfile:
+        path: "{{ vargantvm_ansible_vault_file_fullpath }}"
+        line: "{{ vargantvm_vault_file_content }}"
+
+
+    - name: "Allow passwordless sudo for {{ vagrantvm_ansible_user }}"
+      template:
+        src: ansible.j2
+        dest: "{{ sudoers_profile_dir }}/{{ vagrantvm_ansible_user }}"
+        mode: "0400"
+        owner: root
+        group: root
+        validate: "/usr/sbin/visudo -cf %s"
+
+# It's bootstrap time!
+# Ansible is presented at epel repo, so it has to be two-step procedure
+# First we install git and epel-release, then we will be able to install ansible and fetch code with bootstrap
+    - name: "Update package indexes in APT repos"
+      apt:
+        update_cache: yes
+
+    - name: "Install bootstrap tools"
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ bootstrap_tools }}"
+#
+    - name: "Install ansible on vagrant machine"
+      apt:
+        name: ansible
+        state: present
+
+
+    - name: "Clone git repo with bootstrap code"
+      git:
+        repo: "git@github.com:SergeiMalkov/vagrant-ubuntu.git"
+        dest: "{{ vagrantvm_bootstrap_code_dest }}"
+        key_file: "{{ vagrantvm_ansible_user_ssh_private_key }}"
+        accept_hostkey: yes
+      become: yes
+      become_user: "{{ vagrantvm_ansible_user }}"
+
+    - name: "Run bootstrap playbook"
+      become: yes
+      become_user: "{{ vagrantvm_ansible_user }}"
+      shell: "/usr/bin/ansible-playbook local_bootstrap.yaml --private-key {{ vagrantvm_ansible_user_ssh_private_key }} --ssh-common-args '-o StrictHostKeyChecking=no' | /bin/tee >> {{ vagrantvm_bootstrap_log }}"
+      args:
+        chdir: "{{ vagrantvm_bootstrap_code_dest }}"

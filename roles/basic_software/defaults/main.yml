@@ -1,0 +1,30 @@
+---
+basic_software_user_tools:
+  - vim
+  - mc
+  - tmux
+  - man-pages
+  - tree
+  - git
+  - zsh
+
+basic_software_sysadmin_tools:
+  - nmap
+  - nmap-ncat
+  - tcpdump
+  - telnet
+  - bind-utils
+  - sysstat
+  - rsync
+#  - fuse-sshfs
+  - htop
+  - iperf3
+  - lsof
+
+basic_software_python_tools:
+  - python36
+  - python38
+  - python3-pip
+  - python3-virtualenv
+  - python3-virtualenv-clone
+  - python3-ipython

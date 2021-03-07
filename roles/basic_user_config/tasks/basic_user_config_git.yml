@@ -1,0 +1,17 @@
+---
+
+- name: "Copy git config to my user's home folder "
+  copy:
+    src: gitconfig
+    dest: "{{ basic_user_config_homedir }}/.gitconfig"
+    mode: '0660'
+    owner: "{{ basic_user_config_username }}"
+    group: "{{ basic_user_config_username }}"
+
+- name: "Copy holy gitignore to my user's home folder "
+  copy:
+    src: gitignore
+    dest: "{{ basic_user_config_homedir }}/.gitignore"
+    mode: '0660'
+    owner: "{{ basic_user_config_username }}"
+    group: "{{ basic_user_config_username }}"

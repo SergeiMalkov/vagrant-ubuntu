@@ -1,0 +1,15 @@
+---
+- name: "Change my user\'s shell to zsh"
+  user:
+    name: "{{ basic_user_config_username }}"
+    shell: "/bin/zsh"
+
+- name: "Create stub .zshrc"
+  become: yes
+  become_user: "{{ basic_user_config_username }}"
+  file:
+    path: "{{ basic_user_config_default_zshrc }}"
+    state: touch
+    mode: "0660"
+    owner: "{{ basic_user_config_username }}"
+    group: "{{ basic_user_config_username }}"

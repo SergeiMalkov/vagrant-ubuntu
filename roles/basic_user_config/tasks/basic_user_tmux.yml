@@ -1,0 +1,9 @@
+---
+
+- name: "Copy tmux config to my user's home folder"
+  copy:
+    src: tmux.conf
+    dest: "{{ basic_user_config_homedir }}/.tmux.conf"
+    mode: '0660'
+    owner: "{{ basic_user_config_username }}"
+    group: "{{ basic_user_config_username }}"

@@ -1,0 +1,16 @@
+---
+
+- name: "Download AWS CLI 2"
+  unarchive:
+    src: "{{ install_aws_cli2_download_url }}"
+    remote_src: yes
+    dest: "/tmp"
+    creates: "{{ install_aws_cli2_tmpdir }}"
+
+- name: "Run installation script"
+  command: "{{ install_aws_cli2_tmpdir }}/install"
+
+- name: "Delete temporary installation files"
+  file:
+    path: "{{ install_aws_cli2_tmpdir }}"
+    state: absent

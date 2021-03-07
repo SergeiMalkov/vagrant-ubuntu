@@ -1,0 +1,17 @@
+- name: "Copy my private ssh key to my user's home folder "
+  copy:
+    src: id_rsa
+    dest: "{{ basic_user_config_sshdir }}/id_rsa"
+    mode: '0600'
+    owner: "{{ basic_user_config_username }}"
+    group: "{{ basic_user_config_username }}"
+
+- name: "Copy aws private keypair to my user's home folder"
+  copy:
+    src: aws_keypair_rsa
+    dest: "{{ basic_user_config_sshdir }}/aws_keypair_rsa"
+    mode: '0600'
+    owner: "{{ basic_user_config_username }}"
+    group: "{{ basic_user_config_username }}"
+
+# TODO - refactor this role later in a more eye-candy way with loop

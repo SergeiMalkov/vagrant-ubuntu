@@ -1,0 +1,25 @@
+---
+- include: basic_user_config_sshpk.yml
+  tags:
+    - basic_user_config
+    - basic_user_config_sshpk
+
+- include: basic_user_config_git.yml
+  tags:
+    - basic_user_config
+    - basic_user_config_git
+    -
+- include: basic_user_tmux.yml
+  tags:
+    - basic_user_config
+    - basic_user_tmux
+
+- include: basic_user_vimrc.yml
+  tags:
+    - basic_user_config
+    - basic_user_vimrc
+
+- include: basic_user_zsh.yml
+  tags:
+    - basic_user_config
+    - basic_user_zsh

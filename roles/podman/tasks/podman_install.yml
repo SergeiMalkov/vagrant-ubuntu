@@ -1,0 +1,12 @@
+---
+- name: "Install podman"
+  dnf:
+    name: "{{ item }}"
+    state: installed
+  loop: "{{ podman_packages }}"
+
+- name: "Silent podman warning 'it is not a docker'"
+  file:
+    path: "/etc/containers/nodocker"
+    mode: "0644"
+    state: touch

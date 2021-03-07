@@ -1,0 +1,7 @@
+---
+custom_progs_path: "/opt/custom_progs"
+service_list: ["httpd","nginx","mysql"]
+shared_paths: 
+    nfs: "/mnt/nfs"
+    cifs: "/mnt/cifs"
+    ceph: "/opt/"  

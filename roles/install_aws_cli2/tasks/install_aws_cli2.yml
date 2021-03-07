@@ -1,0 +1,2 @@
+---
+- include install_aws_cli2.yml
