@@ -1,7 +1,0 @@
----
-- name: "Pull bunch of official basic images to work with"
-  podman_image:
-    name: "{{ item }}"
-    pull: yes
-    state: present
-  loop: "{{ user_podman_pull_images_list }}"
