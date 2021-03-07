@@ -1,21 +1,21 @@
 ---
 
 - name: "Install text editor, terminal multiplexer and documentation"
-  dnf:
+  apt:
     name: "{{ item }}"
-    state: installed
+    state: present
   loop: "{{ basic_software_user_tools }}"
 
 
 - name: "Install sysadmin and networking tools"
-  dnf:
+  apt:
     name: "{{ item }}"
-    state: installed
+    state: present
   loop: "{{ basic_software_sysadmin_tools }}"
 
 
 - name: "Install python-related stuff"
-  dnf:
+  apt:
     name: "{{ item }}"
-    state: installed
+    state: present
   loop: "{{ basic_software_python_tools }}"
